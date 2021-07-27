@@ -1,27 +1,45 @@
 pipeline {
     agent any
     stages {
-        stage('git repo & clean') {
+        stage('one') {
             steps {
-               bat "rmdir  /s /q Diksha"
-                bat "git clone https://github.com/api1363/Diksha.git"
-                bat "mvn clean -f Diksha"
+               echo 'this is one'
             }
         }
-        stage('install') {
+        stage('two') {
             steps {
-                bat "mvn install -f Diksha"
+                input('this is two')
             }
         }
-        stage('test') {
-            steps {
-                bat "mvn test -f Diksha"
+        stage('three') {
+            when{
+                not {
+                    branch "master"
+                }
+            }
+            steps{
+                echo "hello"
+        }
+        stage('four') {
+            parallel{
+                stage('unit test'){
+                    steps {
+                         echo "this is four"
+                    }
+                   }
+                stage('integration test'){
+                    agent{
+                        docker{
+                            reuseNode false
+                            image 'ubantu'}
+                    }
+                    steps{
+                        echo 'this is done'
+                    }
+                }
             }
         }
-        stage('package') {
-            steps {
-                bat "mvn package -f Diksha"
-            }
         }
     }
 }
+             
