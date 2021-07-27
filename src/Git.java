@@ -1,6 +1,6 @@
 
 public class Git {
 public static void main(String[] args) {
-	System.out.println("  diksha Hey! ");
+	System.out.println("   Hey! ");
 }
 }
