@@ -1,26 +1,31 @@
 pipeline {
     agent any
+
     stages {
-        stage('git repo & clean') {
+        stage ('Compile Stage') {
+
             steps {
-               bat "rmdir  /s /q Diksha"
-                bat "git clone https://github.com/api1363/Diksha.git"
-                bat "mvn clean -f Diksha"
+            
+                    echo 'mvn clean compile'
+                
             }
         }
-        stage('install') {
+
+        stage ('Testing Stage') {
+
             steps {
-                bat "mvn install -f Diksha"
+                
+                    echo 'mvn test'
+                
             }
         }
-        stage('test') {
+
+
+        stage ('Deployment Stage') {
             steps {
-                bat "mvn test -f Diksha"
-            }
-        }
-        stage('package') {
-            steps {
-                bat "mvn package -f Diksha"
+                
+                    echo 'mvn deploy'
+                
             }
         }
     }
